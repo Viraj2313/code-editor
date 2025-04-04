@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-export async function GET(){
+export async function HEAD(){
 
-    return NextResponse.json({status:"ok"})
+    return new NextResponse()
 }
