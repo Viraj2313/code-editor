@@ -18,10 +18,16 @@ export async function POST(req:Request){
         return NextResponse.json({
             output:result.stdout || result.stderr || "No Output",
         })
-    }catch(error:any){
+    }catch (error: unknown) {
+        let errorMessage = "Unknown error";
+        if (error instanceof Error) {
+            errorMessage = error.message;
+        }
+    
         return NextResponse.json(
-            {output :"Error compiling code", error:error.message},
-            {status:500}
-        )
+            { output: "Error compiling code", error: errorMessage },
+            { status: 500 }
+        );
     }
+    
 }

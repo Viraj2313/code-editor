@@ -11,9 +11,18 @@ export default function CodePage(){
             const res= await axios.post("/api/compile",{code});
             setOutput(res.data.output||"No Output");
 
-        }catch(error:any){
-            setOutput("Error: " + (error?.response?.data?.message || error.message));
-        }finally{
+        }catch (error: unknown) {
+            let errorMessage = "Something went wrong";
+          
+            if (axios.isAxiosError(error)) {
+              errorMessage = error.response?.data?.message || error.message;
+            } else if (error instanceof Error) {
+              errorMessage = error.message;
+            }
+          
+            setOutput("Error: " + errorMessage);
+          }
+          {
             setLoading(false);
         }
     }
